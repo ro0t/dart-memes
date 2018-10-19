@@ -1,0 +1,28 @@
+{
+  "name": "dart-memes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ro0t/dart-memes.git"
+  },
+  "keywords": [
+    "sweg"
+  ],
+  "author": "Adam N. Viðarsson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ro0t/dart-memes/issues"
+  },
+  "homepage": "https://github.com/ro0t/dart-memes#readme",
+  "dependencies": {
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2"
+  }
+}
