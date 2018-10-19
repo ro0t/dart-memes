@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css?family=Press+Start+2P');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body, #dartapp {
+    width: 100%;
+    height: 100%;
+}
+
+html, body, #dartapp, input, textarea, button, select {
+  font-family: 'Press Start 2P', -apple-system, sans-serif;
+}
+
+@mixin selection {
+  background: #000;
+  color: lawngreen;
+  opacity: 1;
+}
+
+::selection { @include selection(); }
+-moz-::selection { @include selection(); }

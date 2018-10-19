@@ -1,10 +1,11 @@
 {
   "name": "dart-memes",
   "version": "1.0.0",
-  "description": "",
+  "description": "Legendary dart app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "parcel index.html",
+    "build": "parcel build index.html --no-cache"
   },
   "repository": {
     "type": "git",
@@ -20,9 +21,18 @@
   },
   "homepage": "https://github.com/ro0t/dart-memes#readme",
   "dependencies": {
+    "@types/react": "^16.4.18",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
+    "components": "^0.1.0",
     "react": "^16.5.2",
-    "react-dom": "^16.5.2"
+    "react-dom": "^16.5.2",
+    "style": "^0.0.3",
+    "styled-components": "^4.0.2"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "sass": "^1.14.3",
+    "typescript": "^3.1.3"
   }
 }
