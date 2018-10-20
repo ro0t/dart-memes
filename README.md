@@ -1,4 +1,5 @@
-![Donald trump](favicon.png) ![Donald trump](favicon.png) ![Donald trump](favicon.png) ![Donald trump](favicon.png) ![Donald trump](favicon.png) ![Donald trump](favicon.png) ![Donald trump](favicon.png)
+![Donald trump](favicon.png)
+## Darts n' stuff
 
 Install parceljs.org via yarn
 ```
