@@ -16,6 +16,10 @@ import trump3 from './trump/trump3.png';
 import beatchina from './trump/beat-china.mp3';
 // @ts-ignore
 import bullseye from './bullseye/bullzii.png';
+// @ts-ignore
+import jackpot from './jackpot/bitcoin.gif';
+// @ts-ignore
+import airhorn from './jackpot/airhorn.mp3';
 
 export const TRUMP_ONE = trump1;
 export const TRUMP_TWO = trump2;
@@ -25,5 +29,8 @@ export const TRUMP_FIRED = fired;
 export const TRUMP_BEATCHINA = beatchina;
 
 export const BULLSEYE = bullseye;
+
+export const JACKPOT = jackpot;
+export const JACKPOT_SOUND = airhorn;
 
 export default { };

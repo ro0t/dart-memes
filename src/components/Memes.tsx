@@ -8,7 +8,8 @@ import {
     TRUMP_MAGA,
     TRUMP_FIRED,
     TRUMP_BEATCHINA,
-    BULLSEYE
+    BULLSEYE,
+    JACKPOT, JACKPOT_SOUND
 } from '../assets/loader';
 
 const TRUMPS: any[] = [TRUMP_ONE, TRUMP_TWO, TRUMP_THREE];
@@ -26,9 +27,10 @@ const TRUMP_ANIM_SECONDS: number = 4;
 
 const BULLS_I_MESSAGE: string = "BULLS 👁";
 
+const JACKPOT_MESSAGE: string = "JJJJJJJACKPOT";
+
 /** Used for animations that appear during game */
 const INGAME_ANIM_SECONDS: number = 2;
-
 
 /** The overlay that all animations appear in and such. */
 const GameOverlayContainer = styled.div`
@@ -48,6 +50,9 @@ const GameOverlayContainer = styled.div`
     }
 `;
 
+/**
+ * TODO - Split animations into more components
+ */
 interface ITrump {
     currentTrump: number;
 }
@@ -79,9 +84,9 @@ const BigAssMessage = styled.h1`
 
 const TrumpMessage = styled(BigAssMessage)`
     color: darkorange;
-    animation: datMessageRiteThurr .6s ease-in forwards, datShadowRiteThurr .1s infinite forwards;
+    animation: datMessageRiteThurr .6s ease-in forwards, datShadeRiteTrump .1s infinite forwards;
     
-    @keyframes datShadowRiteThurr {
+    @keyframes datShadeRiteTrump {
         from {
             text-shadow: darkred 4px 4px 0, orangered -4px -4px 0;
         }
@@ -113,9 +118,9 @@ const Bullseye = styled.div`
 
 const BullseyeMessage = styled(BigAssMessage)`
     color: #fff;
-    animation: datMessageRiteThurr .6s ease-in forwards, datShadowRiteThurr .1s infinite forwards;
+    animation: datMessageRiteThurr .6s ease-in forwards, datBullseyeShade .1s infinite forwards;
     
-    @keyframes datShadowRiteThurr {
+    @keyframes datBullseyeShade {
         from {
             text-shadow: red 4px 4px 0, darkred -4px -4px 0;
         }
@@ -124,6 +129,39 @@ const BullseyeMessage = styled(BigAssMessage)`
             text-shadow: darkred -4px -4px 0, red 4px 4px 0;
         }
     }      
+`;
+
+/**
+ * Create a Jackpot Randomizer like the TRUMPS
+ */
+const Jackpot = styled.div`
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: url(${JACKPOT}) repeat;
+    animation: fadeInJackpot .3s linear;
+    
+    @keyframes fadeInJackpot {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+`;
+
+const JackpotMessage = styled(BigAssMessage)`
+    color: yellow;
+    animation: datMessageRiteThurr .6s ease-in forwards, datJackpotRiteThurr .1s infinite forwards;
+    
+    @keyframes datJackpotRiteThurr {
+        from {
+            text-shadow: darkgreen 4px 4px 0, limegreen -4px -4px 0;
+        }
+        
+        to {
+            text-shadow: darkgreen -4px -4px 0, limegreen 4px 4px 0;
+        }
+    } 
 `;
 
 const TrumpIt = styled.button`
@@ -174,6 +212,7 @@ interface IMemesState {
 }
 
 class Memes extends React.Component<any, IMemesState> {
+    private readonly jackpotSound: Howl;
 
     constructor(props) {
         super(props);
@@ -181,8 +220,14 @@ class Memes extends React.Component<any, IMemesState> {
         this.state = {
             showTrump: false,
             trumpMessage: TRUMP_QUOTES[0],
-            showBullseye: false
+            showBullseye: false,
+            showJackpot: false
         };
+
+        //
+        this.jackpotSound = new Howl({
+            src: JACKPOT_SOUND
+        });
     }
 
     /**
@@ -224,6 +269,8 @@ class Memes extends React.Component<any, IMemesState> {
         if(!this.state.showJackpot) {
             this.setState({ ...this.state, showJackpot: true });
 
+            this.jackpotSound.play();
+
             // Hide that trump fuq
             setTimeout(() => {
                 this.setState({ ...this.state, showJackpot: false });
@@ -242,10 +289,24 @@ class Memes extends React.Component<any, IMemesState> {
                     <JackpotIt onClick={this.jackpot}>Jackpot</JackpotIt>
                 </div>
                 <GameOverlayContainer>
-                    {this.state.showTrump && <TrumpMessage>{this.state.trumpMessage}</TrumpMessage>}
-                    {this.state.showTrump && <Trump style={{ backgroundImage: `url(${TRUMP_ASSET})` }} />}
-                    {this.state.showBullseye && <BullseyeMessage>{BULLS_I_MESSAGE}</BullseyeMessage>}
-                    {this.state.showBullseye && <Bullseye />}
+                    {this.state.showTrump && (
+                        <>
+                            <TrumpMessage>{this.state.trumpMessage}</TrumpMessage>
+                            <Trump style={{ backgroundImage: `url(${TRUMP_ASSET})` }} />
+                        </>
+                    )}
+                    {this.state.showBullseye && (
+                        <>
+                            <BullseyeMessage>{BULLS_I_MESSAGE}</BullseyeMessage>
+                            <Bullseye />
+                        </>
+                    )}
+                    {this.state.showJackpot && (
+                        <>
+                            <JackpotMessage>{JACKPOT_MESSAGE}</JackpotMessage>
+                            <Jackpot />
+                        </>
+                    )}
                 </GameOverlayContainer>
             </React.Fragment>
         );
