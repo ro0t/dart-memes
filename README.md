@@ -1,5 +1,7 @@
+<p align="center">
 ![Donald trump](favicon.png)
 ## Darts n' stuff
+</p>
 
 Install parceljs.org via yarn
 ```
