@@ -1,9 +1,27 @@
 import * as React from 'react';
+import { Howl, Howler } from 'howler';
 import styled from 'styled-components';
-import { TRUMP_ONE, TRUMP_TWO, TRUMP_THREE, BULLSEYE } from '../assets/loader';
+import {
+    TRUMP_ONE,
+    TRUMP_TWO,
+    TRUMP_THREE,
+    TRUMP_MAGA,
+    TRUMP_FIRED,
+    TRUMP_BEATCHINA,
+    BULLSEYE
+} from '../assets/loader';
 
 const TRUMPS: any[] = [TRUMP_ONE, TRUMP_TWO, TRUMP_THREE];
-const TRUMP_QUOTES: string[] = ['MAKE \'MURICA GR8 AGAIN', 'DONALD.. TRUMPED!', 'LIGHTWEIGHT'];
+const TRUMP_QUOTES: string[] = [
+    'MAKE \'MURICA GR8 AGAIN',
+    'YOU SIR ARE FIRED!',
+    'LIGHTWEIGHT'
+];
+const TRUMP_SOUNDS: any[] = [
+    TRUMP_MAGA,
+    TRUMP_FIRED,
+    TRUMP_BEATCHINA
+].map(sound => (new Howl(({ src: sound }))));
 const TRUMP_ANIM_SECONDS: number = 4;
 
 const BULLS_I_MESSAGE: string = "BULLS 👁";
@@ -136,36 +154,45 @@ const BullsIt = styled(TrumpIt)`
     }
 `;
 
-class Memes extends React.Component<any, any> {
-    private readonly TOTAL_TRUMPS: number = TRUMPS.length;
+interface IMemesState {
+    showTrump: boolean;
+    trumpMessage: string;
+    showBullseye: boolean;
+}
+
+class Memes extends React.Component<any, IMemesState> {
 
     constructor(props) {
         super(props);
 
         this.state = {
             showTrump: false,
-            showBullseye: false,
-            currentTrump: 1
+            trumpMessage: TRUMP_QUOTES[0],
+            showBullseye: false
         };
     }
 
-    prepareNextTrump = () => {
-        const currentTrump = (this.state.currentTrump > (this.TOTAL_TRUMPS - 1)) ? 1 : this.state.currentTrump + 1;
-
-        // Set next trump n' hide the old bastard
-        this.setState({
-            ...this.state,
-            showTrump: false,
-            currentTrump
-        });
-    };
-
+    /**
+     * The Donald Trump graphic can be different every time, so it is set in the render function.
+     * This Trump Index set here matches the sound and text together and finally plays the sound
+     * after the state has been updated.
+     */
     trump = () => {
         if(!this.state.showTrump) {
-            this.setState({ ...this.state, showTrump: true });
+            const trumpIndex = Math.floor(Math.random() * TRUMPS.length);
+
+            this.setState({
+                ...this.state,
+                showTrump: true,
+                trumpMessage: TRUMP_QUOTES[trumpIndex]
+            }, () => {
+                TRUMP_SOUNDS[trumpIndex].play();
+            });
 
             // Hide that trump fuq
-            setTimeout(this.prepareNextTrump, TRUMP_ANIM_SECONDS * 1000);
+            setTimeout( () => {
+                this.setState({ ...this.state, showTrump: false });
+            },TRUMP_ANIM_SECONDS * 1000);
         }
     };
 
@@ -176,14 +203,12 @@ class Memes extends React.Component<any, any> {
             // Hide that trump fuq
             setTimeout(() => {
                 this.setState({ ...this.state, showBullseye: false });
-            }, BULLS_I_ANIM_SECONDS * 1000);
+            },BULLS_I_ANIM_SECONDS * 1000);
         }
     };
 
     render() {
-        const trumpIndex = this.state.currentTrump - 1;
-        const TRUMP_ASSET = TRUMPS[trumpIndex];
-        const TRUMP_MESSAGE = TRUMP_QUOTES[trumpIndex];
+        const TRUMP_ASSET = TRUMPS[Math.floor(Math.random() * TRUMPS.length)];
 
         return (
             <React.Fragment>
@@ -192,7 +217,7 @@ class Memes extends React.Component<any, any> {
                     <BullsIt onClick={this.bullseye}>Bullseye</BullsIt>
                 </div>
                 <GameOverlayContainer>
-                    {this.state.showTrump && <TrumpMessage>{TRUMP_MESSAGE}</TrumpMessage>}
+                    {this.state.showTrump && <TrumpMessage>{this.state.trumpMessage}</TrumpMessage>}
                     {this.state.showTrump && <Trump style={{ backgroundImage: `url(${TRUMP_ASSET})` }} />}
                     {this.state.showBullseye && <BullseyeMessage>{BULLS_I_MESSAGE}</BullseyeMessage>}
                     {this.state.showBullseye && <Bullseye />}

@@ -25,6 +25,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "components": "^0.1.0",
+    "howler": "^2.0.15",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "style": "^0.0.3",
