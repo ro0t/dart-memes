@@ -25,7 +25,10 @@ const TRUMP_SOUNDS: any[] = [
 const TRUMP_ANIM_SECONDS: number = 4;
 
 const BULLS_I_MESSAGE: string = "BULLS 👁";
-const BULLS_I_ANIM_SECONDS: number = 2;
+
+/** Used for animations that appear during game */
+const INGAME_ANIM_SECONDS: number = 2;
+
 
 /** The overlay that all animations appear in and such. */
 const GameOverlayContainer = styled.div`
@@ -147,10 +150,19 @@ const TrumpIt = styled.button`
 
 const BullsIt = styled(TrumpIt)`
     color: red;
-    margin-left: 12px;
+    margin: 0 12px;
     
     &:hover {
         background: red;
+    }
+`;
+
+const JackpotIt = styled(TrumpIt)`
+    color: darkgreen;
+    
+    &:hover {
+        background: darkgreen;
+        color: #fff;
     }
 `;
 
@@ -158,6 +170,7 @@ interface IMemesState {
     showTrump: boolean;
     trumpMessage: string;
     showBullseye: boolean;
+    showJackpot: boolean;
 }
 
 class Memes extends React.Component<any, IMemesState> {
@@ -203,7 +216,18 @@ class Memes extends React.Component<any, IMemesState> {
             // Hide that trump fuq
             setTimeout(() => {
                 this.setState({ ...this.state, showBullseye: false });
-            },BULLS_I_ANIM_SECONDS * 1000);
+            },INGAME_ANIM_SECONDS * 1000);
+        }
+    };
+
+    jackpot = () => {
+        if(!this.state.showJackpot) {
+            this.setState({ ...this.state, showJackpot: true });
+
+            // Hide that trump fuq
+            setTimeout(() => {
+                this.setState({ ...this.state, showJackpot: false });
+            },INGAME_ANIM_SECONDS * 1000);
         }
     };
 
@@ -215,6 +239,7 @@ class Memes extends React.Component<any, IMemesState> {
                 <div className={'dev-buttons-container'}>
                     <TrumpIt onClick={this.trump}>Trump it</TrumpIt>
                     <BullsIt onClick={this.bullseye}>Bullseye</BullsIt>
+                    <JackpotIt onClick={this.jackpot}>Jackpot</JackpotIt>
                 </div>
                 <GameOverlayContainer>
                     {this.state.showTrump && <TrumpMessage>{this.state.trumpMessage}</TrumpMessage>}
