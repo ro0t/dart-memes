@@ -1,14 +1,17 @@
 # DART MEMES & DONALD TRUMP
-Install parceljs.org
+Install parceljs.org via yarn
+```
+# npm 
+npm install -g parcel-bundler
 
-After installing ParcelJS, run it:
-```
-parcel index.html
+# yarn
+yarn global add parcel-bundler
 ```
 
-Building the project
+📦 Grab node packages
+🚀 fire up the website (localhost:1234)
 ```
-parcel build index.html --no-cache
+yarn && yarn start
 ```
 
 ## 💻 Tech 🖲
