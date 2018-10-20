@@ -1,4 +1,5 @@
-# DART MEMES & DONALD TRUMP
+![Donald trump](favicon.png) ![Donald trump](favicon.png) ![Donald trump](favicon.png) ![Donald trump](favicon.png) ![Donald trump](favicon.png) ![Donald trump](favicon.png) ![Donald trump](favicon.png)
+
 Install parceljs.org via yarn
 ```
 # npm 
